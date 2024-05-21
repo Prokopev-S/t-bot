@@ -1,7 +1,7 @@
 const { Telegraf, Markup } = require('telegraf')
 const { message } = require('telegraf/filters')
 
-const token = ""
+const token = "cc"
 const webAppUrl = 'https://prokopevs.github.io/rocket-game/#&'
 
 const bot = new Telegraf(token)
