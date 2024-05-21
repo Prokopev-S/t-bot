@@ -1,35 +1,42 @@
 const { Telegraf, Markup } = require('telegraf')
-const { message } = require('telegraf/filters')
+// const { message } = require('telegraf/filters')
 
-const token = "cc"
+const token = ""
 const webAppUrl = 'https://prokopevs.github.io/rocket-game/#&'
 
 const bot = new Telegraf(token)
 
-bot.start((ctx) => {
-    const userName = ctx.from.first_name;
-    const userId = ctx.from.id;
+bot.start(async (ctx) => {
+    try {
+        // const userName = ctx.from.first_name;
+        // const userId = ctx.from.id;
 
-    const { message } = ctx;
-    const id = message.text.split(' ')[1]
-    const startappParam = id ? id : null
+        const { message } = ctx;
+        const id = message.text.split(' ')[1]
+        const startappParam = id ? id : null
 
-    // if (message.text.startsWith('/start')) {
-    //     ctx.reply(`Вы запустили бот с параметром startapp: ${startappParam}`);
-    // }
+        // if (message.text.startsWith('/start')) {
+        //     ctx.reply(`Вы запустили бот с параметром startapp: ${startappParam}`);
+        // }
 
-    ctx.replyWithPhoto({ source: './rocket.jpg' }, {
-        caption: "Let's launch",
-        parse_mode: 'Markdown', 
-        ...Markup.inlineKeyboard([Markup.button.webApp("Play Rocket Game", `${webAppUrl+"startapp="+startappParam}`)
-    ])
-
-    });
+        ctx.replyWithPhoto({ source: './rocket.jpg' }, {
+            caption: "Let's launch",
+            parse_mode: 'Markdown', 
+            ...Markup.inlineKeyboard([Markup.button.webApp("Play Rocket Game", `${webAppUrl+"startapp="+startappParam}`)
+        ])
+        });
+    } catch (error) {
+        console.error('Error occurred while handling /start command:', error);
+    }
 });
 
-bot.hears('/friend', (ctx) => {
-    const userId = ctx.from.id
-    ctx.reply(`Вот ваша реферальная ссылка, зажмите чтобы скопировать: https://t.me/testStarterLaunchBot?start=${userId}`, { parse_mode: 'Markdown' });
+bot.hears('/friend', async (ctx) => {
+    try {
+        const userId = ctx.from.id;
+        await ctx.replyWithHTML(`📱 <b>Referral link:</b> <code>https://t.me/testStarterLaunchBot?start=${userId}</code>`, { parse_mode: 'HTML' });
+    } catch (error) {
+        console.error('Error occurred while handling /friend command:', error);
+    }
 });
 
 bot.launch()
