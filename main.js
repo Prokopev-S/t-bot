@@ -1,8 +1,8 @@
 const { Telegraf, Markup } = require('telegraf')
 const { message } = require('telegraf/filters')
 
-const token = ''
-const webAppUrl = 'https://prokopevs.github.io/rocket-game'
+const token = ""
+const webAppUrl = 'https://prokopevs.github.io/rocket-game/#&'
 
 const bot = new Telegraf(token)
 
@@ -11,28 +11,25 @@ bot.start((ctx) => {
     const userId = ctx.from.id;
 
     const { message } = ctx;
-    const startappParam = message.text.split(' ')[1];
+    const id = message.text.split(' ')[1]
+    const startappParam = id ? id : null
 
     // if (message.text.startsWith('/start')) {
     //     ctx.reply(`Вы запустили бот с параметром startapp: ${startappParam}`);
     // }
 
-    ctx.replyWithPhoto({ source: './scale_1200.jpg' }, {
+    ctx.replyWithPhoto({ source: './rocket.jpg' }, {
         caption: "Let's launch",
         parse_mode: 'Markdown', 
-        ...Markup.inlineKeyboard([Markup.button.webApp("Play Mellstroy Game", `${webAppUrl}`)
+        ...Markup.inlineKeyboard([Markup.button.webApp("Play Rocket Game", `${webAppUrl+"startapp="+startappParam}`)
     ])
 
     });
-    let now = new Date();
-    console.log(ctx.from)
-    console.log(now)
 });
 
 bot.hears('/friend', (ctx) => {
-    // ctx.reply('Вот ваша реферальная ссылка: ..............')
-
-    ctx.reply('Вот ваша реферальная ссылка, нажмите чтобы скопировать: `t.me/testStarterLaunchBot?start=795512`', { parse_mode: 'Markdown' });
+    const userId = ctx.from.id
+    ctx.reply(`Вот ваша реферальная ссылка, зажмите чтобы скопировать: https://t.me/testStarterLaunchBot?start=${userId}`, { parse_mode: 'Markdown' });
 });
 
 bot.launch()
