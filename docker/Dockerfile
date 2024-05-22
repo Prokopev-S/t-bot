@@ -13,6 +13,4 @@ COPY main.js main.js
 COPY rocket.jpg rocket.jpg
 COPY .env .env
 
-RUN npm start
-
-EXPOSE 3003
+CMD ["npm", "start"] 
