@@ -1,8 +1,9 @@
 const { Telegraf, Markup } = require('telegraf')
+require('dotenv').config()
 // const { message } = require('telegraf/filters')
 
-const token = ""
-const webAppUrl = 'https://prokopevs.github.io/rocket-game/#&'
+const token = process.env.BOT_TOKEN
+const webAppUrl = process.env.WEB_APP_URL + "/#&"
 
 const bot = new Telegraf(token)
 
@@ -33,7 +34,7 @@ bot.start(async (ctx) => {
 bot.hears('/friend', async (ctx) => {
     try {
         const userId = ctx.from.id;
-        await ctx.replyWithHTML(`📱 <b>Referral link:</b> <code>https://t.me/testStarterLaunchBot?start=${userId}</code>`, { parse_mode: 'HTML' });
+        await ctx.replyWithHTML(`📱 <b>Referral link:</b> <code>https://t.me/rocket_game_tg_bot?start=${userId}</code>`, { parse_mode: 'HTML' });
     } catch (error) {
         console.error('Error occurred while handling /friend command:', error);
     }
