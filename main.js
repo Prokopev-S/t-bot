@@ -3,7 +3,7 @@ require('dotenv').config()
 // const { message } = require('telegraf/filters')
 
 const token = process.env.BOT_TOKEN
-const webAppUrl = process.env.WEB_APP_URL + "/#&"
+const webAppUrl = process.env.WEB_APP_URL
 
 const bot = new Telegraf(token)
 
@@ -19,11 +19,17 @@ bot.start(async (ctx) => {
         // if (message.text.startsWith('/start')) {
         //     ctx.reply(`Вы запустили бот с параметром startapp: ${startappParam}`);
         // }
+        let url
+        if (startappParam !== null) {
+            url = `${webAppUrl}?startapp=${startappParam}`
+        } else {
+            url = `${webAppUrl}`
+        }
 
         ctx.replyWithPhoto({ source: './rocket.jpg' }, {
             caption: "Let's launch",
             parse_mode: 'Markdown', 
-            ...Markup.inlineKeyboard([Markup.button.webApp("Play Rocket Game", `${webAppUrl+"startapp="+startappParam}`)
+            ...Markup.inlineKeyboard([Markup.button.webApp("Play Rocket Game", url)
         ])
         });
     } catch (error) {
